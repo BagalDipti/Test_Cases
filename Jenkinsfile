@@ -1,15 +1,42 @@
 pipeline {
-  agent { docker { image 'python:3.7.2' } }
+  environment {
+        registry = "diptibagal3010"
+        dockerImage = ''
+        Name = "flask"
+  }
+  agent any
   stages {
-    stage('build') {
+    stage('Cloning Git') {
       steps {
-        sh 'pip install -r requirements.txt'
+        git 'https://github.com/BagalDipti/Test_Cases.git'
       }
     }
-    stage('test') {
-      steps {
-        sh 'python test.py'
-      }   
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + "/" +Name+":$BUILD_NUMBER"
+        }
+      }
     }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '' ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage('Docker Run') {
+        steps {
+          script {
+            sh "docker rm Flask-App --force"
+
+              dockerImage.run(" -p 5001:5001 --rm --name Flask-App")
+          }
+        }
+
+    }
+
   }
 }
