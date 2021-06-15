@@ -2,7 +2,7 @@ agent any
   stages {
     stage('Cloning Git') {
       steps {
-        git 'http://gsgit.gslab.com/dipti_bagal/Jenkins.git'
+        git 'https://github.com/BagalDipti/Test_Cases.git'
       }
     }
   stages {
