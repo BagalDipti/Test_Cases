@@ -17,7 +17,7 @@ agent any
       }
       post {
         always {
-          junit '/*.xml'
+          junit '.xml'
         }
       }
     }
