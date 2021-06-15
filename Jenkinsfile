@@ -2,7 +2,7 @@ agent any
   stages {
     stage('Cloning Git') {
       steps {
-        git 'https://github.com/BagalDipti/Test_Cases.git'
+        git 'http://gsgit.gslab.com/dipti_bagal/Jenkins.git'
       }
     }
   stages {
@@ -17,7 +17,7 @@ agent any
       }
       post {
         always {
-          junit '.xml'
+          junit 'test-reports/*.xml'
         }
       }
     }
